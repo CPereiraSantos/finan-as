@@ -1,5 +1,3 @@
-// MANTÉM O VISUAL ATUAL + ADICIONA EDITAR/EXCLUIR
-
 const API_URL = "https://script.google.com/macros/s/AKfycbzT33TqCjIjm8ojUWm9bCY439hx7hyp5cIfedfU0FeDZ275osfJp0DvmG_UZIDheXns/exec";
 
 let salarioCaio = 0;
@@ -31,7 +29,7 @@ document.getElementById("salarioVictoria").value = salarioVictoria;
 atualizar();
 
 }catch(erro){
-console.log("Erro:", erro);
+console.log("Erro ao carregar:", erro);
 }
 
 }
@@ -40,8 +38,8 @@ function atualizar(){
 
 let totalSalarios = salarioCaio + salarioVictoria;
 
-let totalDespesas = despesas.reduce((a,b)=>{
-return a + Number(b.valor);
+let totalDespesas = despesas.reduce((total,item)=>{
+return total + Number(item.valor);
 },0);
 
 let divisao = totalDespesas / 2;
@@ -55,8 +53,8 @@ document.getElementById("divisao").innerText = moeda(divisao);
 document.getElementById("salCaio").innerText = moeda(salarioCaio);
 document.getElementById("salVictoria").innerText = moeda(salarioVictoria);
 
-document.getElementById("caioSobra").innerText = moeda(salarioCaio-divisao);
-document.getElementById("vicSobra").innerText = moeda(salarioVictoria-divisao);
+document.getElementById("caioSobra").innerText = moeda(salarioCaio - divisao);
+document.getElementById("vicSobra").innerText = moeda(salarioVictoria - divisao);
 
 let html = "";
 
@@ -65,10 +63,14 @@ despesas.slice().reverse().forEach(item=>{
 html += `
 <li>
 <span>${item.descricao}</span>
+
+<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
 <strong>${moeda(item.valor)}</strong>
 
-<button onclick="editarConta('${item.id}','${item.descricao}','${item.valor}')">✏️</button>
-<button onclick="excluirConta('${item.id}')">🗑️</button>
+<button onclick="editarConta('${item.id}','${item.descricao}','${item.valor}')" style="width:auto;padding:6px 10px;">✏️</button>
+
+<button onclick="excluirConta('${item.id}')" style="width:auto;padding:6px 10px;background:#c62828;">🗑️</button>
+</div>
 
 </li>
 `;
@@ -114,7 +116,7 @@ carregar();
 
 async function editarConta(id,nome,valor){
 
-let novoNome = prompt("Editar nome:", nome);
+let novoNome = prompt("Editar nome da conta:", nome);
 if(novoNome === null) return;
 
 let novoValor = prompt("Editar valor:", valor);
@@ -136,7 +138,7 @@ carregar();
 
 async function excluirConta(id){
 
-if(!confirm("Excluir esta conta?")) return;
+if(!confirm("Deseja excluir esta conta?")) return;
 
 await fetch(API_URL,{
 method:"POST",
