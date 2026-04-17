@@ -3,7 +3,7 @@
 const API_URL = "https://script.google.com/macros/s/AKfycbxfYn3_btzOabatuW5q1HalA--MyxHeit10hrTzij_XIRjL78MzmbxYdHS7FWcsLl4M/exec";
 
 let salarioCaio = 3000;
-let salarioVictoria = 2500;
+let salarioVictoria = 1500;
 
 let despesas = [];
 
