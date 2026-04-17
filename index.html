@@ -6,7 +6,6 @@
 <title>Dindin Casinha 🖤</title>
 
 <link rel="stylesheet" href="style.css">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
@@ -20,31 +19,6 @@
 <p>Caio & Victoria</p>
 </header>
 
-<!-- FILTRO MÊS -->
-
-<section class="form-box">
-
-<h2>📅 Escolher Mês</h2>
-
-<select id="mesSelecionado" onchange="carregar()">
-
-<option value="1">Janeiro</option>
-<option value="2">Fevereiro</option>
-<option value="3">Março</option>
-<option value="4">Abril</option>
-<option value="5">Maio</option>
-<option value="6">Junho</option>
-<option value="7">Julho</option>
-<option value="8">Agosto</option>
-<option value="9">Setembro</option>
-<option value="10">Outubro</option>
-<option value="11">Novembro</option>
-<option value="12">Dezembro</option>
-
-</select>
-
-</section>
-
 <section class="cards">
 
 <div class="card">
@@ -53,12 +27,12 @@
 </div>
 
 <div class="card">
-<span>💸 Despesas do Mês</span>
+<span>💸 Contas do Mês</span>
 <h2 id="despesas">R$ 0,00</h2>
 </div>
 
 <div class="card">
-<span>🏠 Sobra do Mês</span>
+<span>🏠 Sobra da Casa</span>
 <h2 id="sobra">R$ 0,00</h2>
 </div>
 
@@ -73,42 +47,43 @@
 
 <div class="person">
 <h3>Caio</h3>
-<p id="caioSobra">R$ 0,00</p>
+<p>Salário: <span id="salCaio">R$ 0,00</span></p>
+<p>Sobra: <span id="caioSobra">R$ 0,00</span></p>
 </div>
 
 <div class="person">
 <h3>Victoria</h3>
-<p id="vicSobra">R$ 0,00</p>
+<p>Salário: <span id="salVictoria">R$ 0,00</span></p>
+<p>Sobra: <span id="vicSobra">R$ 0,00</span></p>
 </div>
 
 </section>
 
 <section class="form-box">
 
-<h2>💰 Salários da Casa</h2>
+<h2>💰 Salários Fixos</h2>
 
 <input type="number" id="salarioCaio" placeholder="Salário Caio">
 <input type="number" id="salarioVictoria" placeholder="Salário Victoria">
 
-<button onclick="salvarSalarios()">Salvar Salários</button>
+<button onclick="salvarSalarios()">Salvar</button>
 
 </section>
 
 <section class="form-box">
 
-<h2>💸 Nova Despesa</h2>
+<h2>💸 Nova Conta</h2>
 
 <input type="text" id="descricao" placeholder="Descrição">
 <input type="number" id="valor" placeholder="Valor">
 
-<button onclick="addDespesa()">Salvar Despesa</button>
+<button onclick="addDespesa()">Salvar Conta</button>
 
 </section>
 
 <section class="lista">
 
-<h2>📋 Gastos do Mês</h2>
-
+<h2>📋 Contas</h2>
 <ul id="gastos"></ul>
 
 </section>
