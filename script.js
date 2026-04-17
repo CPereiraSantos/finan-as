@@ -1,112 +1,108 @@
-// script.js VERSÃO 3.0 - Google Sheets integrado
+// script.js VERSÃO 4.0
 
-const API_URL = "https://script.google.com/macros/s/AKfycbxfYn3_btzOabatuW5q1HalA--MyxHeit10hrTzij_XIRjL78MzmbxYdHS7FWcsLl4M/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbzR5t1Stifd0iVyN7U1g8KEMxzpabFekQt1TWpU3DaF-RulKWbAF9yH8BfYLuHhreDb/exec";
 
-let salarioCaio = 3000;
-let salarioVictoria = 1500;
-
+let salarioCaio = 0;
+let salarioVictoria = 0;
 let despesas = [];
 
-function moeda(valor){
-return valor.toLocaleString('pt-BR',{
+function moeda(v){
+return v.toLocaleString('pt-BR',{
 style:'currency',
 currency:'BRL'
 });
 }
 
-async function carregarDados(){
+async function carregar(){
 
-try{
-
-const resposta = await fetch(API_URL);
-const dados = await resposta.json();
+const req = await fetch(API_URL);
+const dados = await req.json();
 
 despesas = [];
 
-dados.forEach(item=>{
-
+dados.despesas.forEach(item=>{
 despesas.push({
 nome:item.descricao,
 valor:Number(item.valor)
 });
-
 });
 
-atualizarTela();
+salarioCaio = Number(dados.salarios[0].salario);
+salarioVictoria = Number(dados.salarios[1].salario);
 
-}catch(error){
+document.getElementById("salarioCaio").value = salarioCaio;
+document.getElementById("salarioVictoria").value = salarioVictoria;
 
-console.log("Erro ao carregar");
+atualizar();
 
 }
 
-}
-
-function atualizarTela(){
+function atualizar(){
 
 let totalSalarios = salarioCaio + salarioVictoria;
-
 let totalDespesas = despesas.reduce((a,b)=>a+b.valor,0);
-
-let sobraTotal = totalSalarios - totalDespesas;
-
 let divisao = totalDespesas / 2;
+let sobra = totalSalarios - totalDespesas;
 
-let sobraCaio = salarioCaio - divisao;
-let sobraVictoria = salarioVictoria - divisao;
+document.getElementById("salarios").innerText = moeda(totalSalarios);
+document.getElementById("despesas").innerText = moeda(totalDespesas);
+document.getElementById("sobra").innerText = moeda(sobra);
+document.getElementById("divisao").innerText = moeda(divisao);
 
-document.getElementById('salarios').innerText = moeda(totalSalarios);
-document.getElementById('despesas').innerText = moeda(totalDespesas);
-document.getElementById('sobra').innerText = moeda(sobraTotal);
-document.getElementById('divisao').innerText = moeda(divisao);
+document.getElementById("caioSobra").innerText = moeda(salarioCaio-divisao);
+document.getElementById("vicSobra").innerText = moeda(salarioVictoria-divisao);
 
-document.getElementById('caioSobra').innerText = moeda(sobraCaio);
-document.getElementById('vicSobra').innerText = moeda(sobraVictoria);
-
-let lista = document.getElementById('gastos');
-lista.innerHTML = '';
-
+let html = "";
 despesas.slice().reverse().forEach(item=>{
-
-lista.innerHTML += `
+html += `
 <li>
 <span>${item.nome}</span>
 <strong>${moeda(item.valor)}</strong>
 </li>
 `;
-
 });
+
+document.getElementById("gastos").innerHTML = html;
+
+}
+
+async function salvarSalarios(){
+
+let caio = Number(document.getElementById("salarioCaio").value);
+let victoria = Number(document.getElementById("salarioVictoria").value);
+
+await fetch(API_URL,{
+method:"POST",
+body:JSON.stringify({
+tipo:"salario",
+caio:caio,
+victoria:victoria
+})
+});
+
+carregar();
 
 }
 
 async function addDespesa(){
 
-let nome = document.getElementById('descricao').value;
-let valor = Number(document.getElementById('valor').value);
-
-if(nome == '' || valor <= 0){
-alert('Preencha corretamente');
-return;
-}
-
-const payload = {
-data:new Date().toLocaleDateString('pt-BR'),
-responsavel:"Casa",
-descricao:nome,
-categoria:"Geral",
-valor:valor
-};
+let nome = document.getElementById("descricao").value;
+let valor = Number(document.getElementById("valor").value);
 
 await fetch(API_URL,{
-method:'POST',
-body:JSON.stringify(payload)
+method:"POST",
+body:JSON.stringify({
+tipo:"despesa",
+descricao:nome,
+valor:valor
+})
 });
 
-document.getElementById('descricao').value='';
-document.getElementById('valor').value='';
+document.getElementById("descricao").value = "";
+document.getElementById("valor").value = "";
 
-carregarDados();
+carregar();
 
 }
 
-carregarDados();
+carregar();

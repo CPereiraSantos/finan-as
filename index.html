@@ -1,14 +1,18 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dindin Casinha - Caio & Victoria</title>
+<title>Dindin Casinha 🖤</title>
+
 <link rel="stylesheet" href="style.css">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
 <div class="container">
@@ -56,21 +60,51 @@
 
 </section>
 
-<section class="form-box">
-<h2>Nova Despesa</h2>
+<!-- SALÁRIOS -->
 
-<input type="text" id="descricao" placeholder="Descrição">
-<input type="number" id="valor" placeholder="Valor">
-<button onclick="addDespesa()">Salvar</button>
+<section class="form-box">
+
+<h2>💰 Salários da Casa</h2>
+
+<input type="number" id="salarioCaio" placeholder="Salário Caio">
+
+<input type="number" id="salarioVictoria" placeholder="Salário Victoria">
+
+<button onclick="salvarSalarios()">
+Salvar Salários
+</button>
+
 </section>
 
+<!-- NOVA DESPESA -->
+
+<section class="form-box">
+
+<h2>💸 Nova Despesa</h2>
+
+<input type="text" id="descricao" placeholder="Descrição">
+
+<input type="number" id="valor" placeholder="Valor">
+
+<button onclick="addDespesa()">
+Salvar Despesa
+</button>
+
+</section>
+
+<!-- LISTA -->
+
 <section class="lista">
-<h2>Últimos Gastos</h2>
+
+<h2>📋 Últimos Gastos</h2>
+
 <ul id="gastos"></ul>
+
 </section>
 
 </div>
 
 <script src="script.js"></script>
+
 </body>
 </html>
