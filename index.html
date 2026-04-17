@@ -8,8 +8,6 @@
 <link rel="stylesheet" href="style.css">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 
@@ -22,6 +20,31 @@
 <p>Caio & Victoria</p>
 </header>
 
+<!-- FILTRO MÊS -->
+
+<section class="form-box">
+
+<h2>📅 Escolher Mês</h2>
+
+<select id="mesSelecionado" onchange="carregar()">
+
+<option value="1">Janeiro</option>
+<option value="2">Fevereiro</option>
+<option value="3">Março</option>
+<option value="4">Abril</option>
+<option value="5">Maio</option>
+<option value="6">Junho</option>
+<option value="7">Julho</option>
+<option value="8">Agosto</option>
+<option value="9">Setembro</option>
+<option value="10">Outubro</option>
+<option value="11">Novembro</option>
+<option value="12">Dezembro</option>
+
+</select>
+
+</section>
+
 <section class="cards">
 
 <div class="card">
@@ -30,12 +53,12 @@
 </div>
 
 <div class="card">
-<span>💸 Despesas</span>
+<span>💸 Despesas do Mês</span>
 <h2 id="despesas">R$ 0,00</h2>
 </div>
 
 <div class="card">
-<span>🏠 Sobra Total</span>
+<span>🏠 Sobra do Mês</span>
 <h2 id="sobra">R$ 0,00</h2>
 </div>
 
@@ -60,43 +83,31 @@
 
 </section>
 
-<!-- SALÁRIOS -->
-
 <section class="form-box">
 
 <h2>💰 Salários da Casa</h2>
 
 <input type="number" id="salarioCaio" placeholder="Salário Caio">
-
 <input type="number" id="salarioVictoria" placeholder="Salário Victoria">
 
-<button onclick="salvarSalarios()">
-Salvar Salários
-</button>
+<button onclick="salvarSalarios()">Salvar Salários</button>
 
 </section>
-
-<!-- NOVA DESPESA -->
 
 <section class="form-box">
 
 <h2>💸 Nova Despesa</h2>
 
 <input type="text" id="descricao" placeholder="Descrição">
-
 <input type="number" id="valor" placeholder="Valor">
 
-<button onclick="addDespesa()">
-Salvar Despesa
-</button>
+<button onclick="addDespesa()">Salvar Despesa</button>
 
 </section>
 
-<!-- LISTA -->
-
 <section class="lista">
 
-<h2>📋 Últimos Gastos</h2>
+<h2>📋 Gastos do Mês</h2>
 
 <ul id="gastos"></ul>
 

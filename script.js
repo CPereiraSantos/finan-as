@@ -1,4 +1,4 @@
-// script.js VERSÃO 4.0
+// script.js MÊS A MÊS
 
 const API_URL = "https://script.google.com/macros/s/AKfycbzR5t1Stifd0iVyN7U1g8KEMxzpabFekQt1TWpU3DaF-RulKWbAF9yH8BfYLuHhreDb/exec";
 
@@ -18,13 +18,24 @@ async function carregar(){
 const req = await fetch(API_URL);
 const dados = await req.json();
 
+let mes = document.getElementById("mesSelecionado").value;
+
 despesas = [];
 
 dados.despesas.forEach(item=>{
+
+let data = new Date(item.data);
+let mesItem = data.getMonth()+1;
+
+if(mesItem == mes){
+
 despesas.push({
 nome:item.descricao,
 valor:Number(item.valor)
 });
+
+}
+
 });
 
 salarioCaio = Number(dados.salarios[0].salario);
@@ -53,13 +64,16 @@ document.getElementById("caioSobra").innerText = moeda(salarioCaio-divisao);
 document.getElementById("vicSobra").innerText = moeda(salarioVictoria-divisao);
 
 let html = "";
+
 despesas.slice().reverse().forEach(item=>{
+
 html += `
 <li>
 <span>${item.nome}</span>
 <strong>${moeda(item.valor)}</strong>
 </li>
 `;
+
 });
 
 document.getElementById("gastos").innerHTML = html;
@@ -68,15 +82,12 @@ document.getElementById("gastos").innerHTML = html;
 
 async function salvarSalarios(){
 
-let caio = Number(document.getElementById("salarioCaio").value);
-let victoria = Number(document.getElementById("salarioVictoria").value);
-
 await fetch(API_URL,{
 method:"POST",
 body:JSON.stringify({
 tipo:"salario",
-caio:caio,
-victoria:victoria
+caio:Number(document.getElementById("salarioCaio").value),
+victoria:Number(document.getElementById("salarioVictoria").value)
 })
 });
 
@@ -86,15 +97,12 @@ carregar();
 
 async function addDespesa(){
 
-let nome = document.getElementById("descricao").value;
-let valor = Number(document.getElementById("valor").value);
-
 await fetch(API_URL,{
 method:"POST",
 body:JSON.stringify({
 tipo:"despesa",
-descricao:nome,
-valor:valor
+descricao:document.getElementById("descricao").value,
+valor:Number(document.getElementById("valor").value)
 })
 });
 
@@ -105,4 +113,11 @@ carregar();
 
 }
 
+window.onload = function(){
+
+let hoje = new Date().getMonth()+1;
+document.getElementById("mesSelecionado").value = hoje;
+
 carregar();
+
+}
