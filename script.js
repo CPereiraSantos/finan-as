@@ -50,8 +50,8 @@ document.getElementById("despesas").innerText = moeda(totalDespesas);
 document.getElementById("sobra").innerText = moeda(sobraCasa);
 document.getElementById("divisao").innerText = moeda(divisao);
 
-document.getElementById("salCaio").innerText = moeda(salarioCaio);
-document.getElementById("salVictoria").innerText = moeda(salarioVictoria);
+document.getElementById("salCaio").innerText = moeda(salarioCaio - divisao + divisao);
+document.getElementById("salVictoria").innerText = moeda(salarioVictoria - divisao + divisao);
 
 document.getElementById("caioSobra").innerText = moeda(salarioCaio - divisao);
 document.getElementById("vicSobra").innerText = moeda(salarioVictoria - divisao);
@@ -61,15 +61,28 @@ let html = "";
 despesas.slice().reverse().forEach(item=>{
 
 html += `
-<li>
+<li style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+
+<div style="flex:1;min-width:140px;">
 <span>${item.descricao}</span>
+</div>
 
-<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-<strong>${moeda(item.valor)}</strong>
+<div style="font-weight:bold;">
+${moeda(item.valor)}
+</div>
 
-<button onclick="editarConta('${item.id}','${item.descricao}','${item.valor}')" style="width:auto;padding:6px 10px;">✏️</button>
+<div style="display:flex;gap:6px;">
 
-<button onclick="excluirConta('${item.id}')" style="width:auto;padding:6px 10px;background:#c62828;">🗑️</button>
+<button onclick="editarConta('${item.id}','${item.descricao}','${item.valor}')" 
+style="width:32px;height:32px;padding:0;border-radius:8px;font-size:14px;">
+✏️
+</button>
+
+<button onclick="excluirConta('${item.id}')" 
+style="width:32px;height:32px;padding:0;border-radius:8px;font-size:14px;background:#c62828;">
+🗑️
+</button>
+
 </div>
 
 </li>
