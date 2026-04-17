@@ -114,7 +114,8 @@ color:#fff;
 font-size:16px;
 }
 
-button{
+/* BOTÕES GRANDES SOMENTE FORMULÁRIOS */
+.form-box button{
 width:100%;
 padding:15px;
 border:none;
@@ -124,10 +125,39 @@ font-size:17px;
 font-weight:700;
 cursor:pointer;
 transition:.3s;
+color:#000;
 }
 
-button:hover{
+.form-box button:hover{
 transform:scale(1.02);
+}
+
+/* BOTÕES PEQUENOS EDITAR / EXCLUIR */
+.mini-btn{
+width:32px !important;
+height:32px !important;
+min-width:32px;
+padding:0 !important;
+border:none;
+border-radius:8px;
+background:#00ff9d;
+font-size:14px;
+font-weight:700;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+transition:.2s;
+color:#000;
+}
+
+.mini-btn:hover{
+transform:scale(1.08);
+}
+
+.excluir{
+background:#c62828;
+color:#fff;
 }
 
 ul{
@@ -135,11 +165,14 @@ list-style:none;
 }
 
 li{
-padding:14px;
+padding:14px 0;
 border-bottom:1px solid #222;
 display:flex;
 justify-content:space-between;
+align-items:center;
+gap:12px;
 color:#ddd;
+flex-wrap:wrap;
 }
 
 @keyframes fadeUp{
@@ -165,6 +198,10 @@ grid-template-columns:1fr;
 
 .card h2{
 font-size:24px;
+}
+
+li{
+align-items:flex-start;
 }
 
 }
