@@ -1,0 +1,76 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dindin Casinha - Caio & Victoria</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+
+<header>
+<h1>Dindin Casinha 🖤</h1>
+<p>Caio & Victoria</p>
+</header>
+
+<section class="cards">
+
+<div class="card">
+<span>💰 Salários Totais</span>
+<h2 id="salarios">R$ 0,00</h2>
+</div>
+
+<div class="card">
+<span>💸 Despesas</span>
+<h2 id="despesas">R$ 0,00</h2>
+</div>
+
+<div class="card">
+<span>🏠 Sobra Total</span>
+<h2 id="sobra">R$ 0,00</h2>
+</div>
+
+<div class="card">
+<span>➗ Cada um paga</span>
+<h2 id="divisao">R$ 0,00</h2>
+</div>
+
+</section>
+
+<section class="family">
+
+<div class="person">
+<h3>Caio</h3>
+<p id="caioSobra">R$ 0,00</p>
+</div>
+
+<div class="person">
+<h3>Victoria</h3>
+<p id="vicSobra">R$ 0,00</p>
+</div>
+
+</section>
+
+<section class="form-box">
+<h2>Nova Despesa</h2>
+
+<input type="text" id="descricao" placeholder="Descrição">
+<input type="number" id="valor" placeholder="Valor">
+<button onclick="addDespesa()">Salvar</button>
+</section>
+
+<section class="lista">
+<h2>Últimos Gastos</h2>
+<ul id="gastos"></ul>
+</section>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
