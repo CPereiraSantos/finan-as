@@ -29,7 +29,7 @@ document.getElementById("salarioVictoria").value = salarioVictoria;
 atualizar();
 
 }catch(erro){
-console.log("Erro ao carregar:", erro);
+console.log("Erro:", erro);
 }
 
 }
@@ -38,8 +38,8 @@ function atualizar(){
 
 let totalSalarios = salarioCaio + salarioVictoria;
 
-let totalDespesas = despesas.reduce((total,item)=>{
-return total + Number(item.valor);
+let totalDespesas = despesas.reduce((a,b)=>{
+return a + Number(b.valor);
 },0);
 
 let divisao = totalDespesas / 2;
@@ -50,36 +50,59 @@ document.getElementById("despesas").innerText = moeda(totalDespesas);
 document.getElementById("sobra").innerText = moeda(sobraCasa);
 document.getElementById("divisao").innerText = moeda(divisao);
 
-document.getElementById("salCaio").innerText = moeda(salarioCaio - divisao + divisao);
-document.getElementById("salVictoria").innerText = moeda(salarioVictoria - divisao + divisao);
+document.getElementById("salCaio").innerText = moeda(salarioCaio);
+document.getElementById("salVictoria").innerText = moeda(salarioVictoria);
 
-document.getElementById("caioSobra").innerText = moeda(salarioCaio - divisao);
-document.getElementById("vicSobra").innerText = moeda(salarioVictoria - divisao);
+document.getElementById("caioSobra").innerText = moeda(salarioCaio-divisao);
+document.getElementById("vicSobra").innerText = moeda(salarioVictoria-divisao);
 
 let html = "";
 
 despesas.slice().reverse().forEach(item=>{
 
 html += `
-<li style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+<li style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #333;gap:10px;">
 
-<div style="flex:1;min-width:140px;">
+<div style="flex:1;">
 <span>${item.descricao}</span>
 </div>
 
-<div style="font-weight:bold;">
+<strong style="min-width:95px;text-align:right;">
 ${moeda(item.valor)}
-</div>
+</strong>
 
-<div style="display:flex;gap:6px;">
+<div style="display:flex;gap:4px;flex-shrink:0;">
 
 <button onclick="editarConta('${item.id}','${item.descricao}','${item.valor}')" 
-style="width:32px;height:32px;padding:0;border-radius:8px;font-size:14px;">
+style="
+width:28px !important;
+min-width:28px !important;
+max-width:28px !important;
+height:28px !important;
+padding:0 !important;
+font-size:12px !important;
+border-radius:6px;
+display:flex;
+align-items:center;
+justify-content:center;
+">
 ✏️
 </button>
 
 <button onclick="excluirConta('${item.id}')" 
-style="width:32px;height:32px;padding:0;border-radius:8px;font-size:14px;background:#c62828;">
+style="
+width:28px !important;
+min-width:28px !important;
+max-width:28px !important;
+height:28px !important;
+padding:0 !important;
+font-size:12px !important;
+border-radius:6px;
+background:#c62828;
+display:flex;
+align-items:center;
+justify-content:center;
+">
 🗑️
 </button>
 
@@ -120,8 +143,8 @@ valor:Number(document.getElementById("valor").value)
 })
 });
 
-document.getElementById("descricao").value = "";
-document.getElementById("valor").value = "";
+document.getElementById("descricao").value="";
+document.getElementById("valor").value="";
 
 carregar();
 
@@ -129,7 +152,7 @@ carregar();
 
 async function editarConta(id,nome,valor){
 
-let novoNome = prompt("Editar nome da conta:", nome);
+let novoNome = prompt("Editar nome:", nome);
 if(novoNome === null) return;
 
 let novoValor = prompt("Editar valor:", valor);
