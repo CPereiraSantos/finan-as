@@ -1,3 +1,5 @@
+// MANTÉM O VISUAL ATUAL + ADICIONA EDITAR/EXCLUIR
+
 const API_URL = "https://script.google.com/macros/s/AKfycbzT33TqCjIjm8ojUWm9bCY439hx7hyp5cIfedfU0FeDZ275osfJp0DvmG_UZIDheXns/exec";
 
 let salarioCaio = 0;
@@ -15,10 +17,11 @@ async function carregar(){
 
 try{
 
-const req = await fetch(API_URL);
+const req = await fetch(API_URL + "?t=" + Date.now());
 const dados = await req.json();
 
 despesas = dados.despesas || [];
+
 salarioCaio = Number(dados.salarios[0]?.salario || 0);
 salarioVictoria = Number(dados.salarios[1]?.salario || 0);
 
@@ -28,7 +31,7 @@ document.getElementById("salarioVictoria").value = salarioVictoria;
 atualizar();
 
 }catch(erro){
-console.log("Erro ao carregar:", erro);
+console.log("Erro:", erro);
 }
 
 }
@@ -37,15 +40,12 @@ function atualizar(){
 
 let totalSalarios = salarioCaio + salarioVictoria;
 
-let totalDespesas = despesas.reduce((total,item)=>{
-return total + Number(item.valor);
+let totalDespesas = despesas.reduce((a,b)=>{
+return a + Number(b.valor);
 },0);
 
 let divisao = totalDespesas / 2;
 let sobraCasa = totalSalarios - totalDespesas;
-
-let sobraCaio = salarioCaio - divisao;
-let sobraVictoria = salarioVictoria - divisao;
 
 document.getElementById("salarios").innerText = moeda(totalSalarios);
 document.getElementById("despesas").innerText = moeda(totalDespesas);
@@ -55,8 +55,8 @@ document.getElementById("divisao").innerText = moeda(divisao);
 document.getElementById("salCaio").innerText = moeda(salarioCaio);
 document.getElementById("salVictoria").innerText = moeda(salarioVictoria);
 
-document.getElementById("caioSobra").innerText = moeda(sobraCaio);
-document.getElementById("vicSobra").innerText = moeda(sobraVictoria);
+document.getElementById("caioSobra").innerText = moeda(salarioCaio-divisao);
+document.getElementById("vicSobra").innerText = moeda(salarioVictoria-divisao);
 
 let html = "";
 
@@ -66,6 +66,10 @@ html += `
 <li>
 <span>${item.descricao}</span>
 <strong>${moeda(item.valor)}</strong>
+
+<button onclick="editarConta('${item.id}','${item.descricao}','${item.valor}')">✏️</button>
+<button onclick="excluirConta('${item.id}')">🗑️</button>
+
 </li>
 `;
 
@@ -103,6 +107,44 @@ valor:Number(document.getElementById("valor").value)
 
 document.getElementById("descricao").value = "";
 document.getElementById("valor").value = "";
+
+carregar();
+
+}
+
+async function editarConta(id,nome,valor){
+
+let novoNome = prompt("Editar nome:", nome);
+if(novoNome === null) return;
+
+let novoValor = prompt("Editar valor:", valor);
+if(novoValor === null) return;
+
+await fetch(API_URL,{
+method:"POST",
+body:JSON.stringify({
+tipo:"editarDespesa",
+id:id,
+descricao:novoNome,
+valor:Number(novoValor)
+})
+});
+
+carregar();
+
+}
+
+async function excluirConta(id){
+
+if(!confirm("Excluir esta conta?")) return;
+
+await fetch(API_URL,{
+method:"POST",
+body:JSON.stringify({
+tipo:"excluirDespesa",
+id:id
+})
+});
 
 carregar();
 
